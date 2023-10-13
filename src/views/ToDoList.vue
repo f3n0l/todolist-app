@@ -122,13 +122,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, Ref } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, Ref, reactive } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
 window.addEventListener("click", () => {
     menuOpen.value = false;
 });
 
-const store = useToDoListStore();
+const store = reactive(useToDoListStore());
 const activeMenuId: Ref<number | null> = ref(null);
 
 const completedTasksOpen = ref(true);
@@ -145,18 +145,14 @@ function toggleCompletedTasks() {
 }
 
 function toggleActivation(taskId: number) {
-    const task = store.tasks.find((task) => task.id === taskId);
-    if (task) {
-        task.completed = !task.completed;
-    }
+    store.toggleTaskCompletion(taskId);
 }
 
 function deleteTask(taskId: number) {
-    // Logic to delete the task
-    const taskIndex = store.tasks.findIndex((task) => task.id === taskId);
-    if (taskIndex !== -1) {
-        store.tasks.splice(taskIndex, 1);
-    }
+    store.deleteTask(taskId);
+}
+function moveToBacklog(taskId: number) {
+    store.moveToBacklog(taskId);
 }
 function toggleMenu(taskId: number, event: MouseEvent) {
     // Prevent the click event from propagating to the parent elements
@@ -186,13 +182,6 @@ function handleGlobalClick(event: MouseEvent) {
     if (menu && !menu.contains(event.target as Node)) {
         activeMenuId.value = null;
     }
-}
-function moveToBacklog(taskId: number) {
-    // Logic to move the task to the backlog
-    // Call your store's moveToBacklog action here
-    store.moveToBacklog(taskId);
-    // Close the menu after moving the task
-    menuOpen.value = false;
 }
 </script>
 

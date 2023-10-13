@@ -6,6 +6,8 @@ export interface ToDoTask {
     description: string;
     completed: boolean;
 }
+// import { useBacklogStore } from "../store/useBacklogStore";
+
 // The useToDoListStore store is defined here
 export const useToDoListStore = defineStore("toDoList", {
     state: () => ({
@@ -30,15 +32,15 @@ export const useToDoListStore = defineStore("toDoList", {
                 task.completed = !task.completed;
             }
         },
-        moveToBacklog(taskId: number) {
-            const taskIndex = this.tasks.findIndex(
-                (task) => task.id === taskId
-            );
-            if (taskIndex !== -1) {
-                const taskToMove = this.tasks.splice(taskIndex, 1)[0];
-                // Call your backlog store's addTask action here
-                useBacklogStore.addTask(taskToMove);
-            }
-        },
+        // moveToBacklog(taskId: number) {
+        //     const taskIndex = this.tasks.findIndex(
+        //         (task) => task.id === taskId
+        //     );
+        //     if (taskIndex !== -1) {
+        //         const taskToMove = this.tasks.splice(taskIndex, 1)[0];
+        //         // Call your backlog store's addTask action here
+        //         useBacklogStore.addTask(taskToMove);
+        //     }
+        // },
     },
 });
