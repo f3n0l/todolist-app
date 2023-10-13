@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, toRefs } from "pinia";
 
 export interface ToDoTask {
     id: number;
@@ -27,9 +27,12 @@ export const useToDoListStore = defineStore("toDoList", {
             this.tasks = this.tasks.filter((task) => task.id !== taskId);
         },
         toggleTaskCompletion(taskId: number): void {
-            const task = this.tasks.find((task) => task.id === taskId);
-            if (task) {
-                task.completed = !task.completed;
+            const taskIndex = this.tasks.findIndex(
+                (task) => task.id === taskId
+            );
+            if (taskIndex !== -1) {
+                this.tasks[taskIndex].completed =
+                    !this.tasks[taskIndex].completed;
             }
         },
         // moveToBacklog(taskId: number) {

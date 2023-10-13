@@ -145,15 +145,16 @@ function toggleCompletedTasks() {
 }
 
 function toggleActivation(taskId: number) {
+    console.log(taskId);
     store.toggleTaskCompletion(taskId);
 }
 
 function deleteTask(taskId: number) {
     store.deleteTask(taskId);
 }
-function moveToBacklog(taskId: number) {
-    store.moveToBacklog(taskId);
-}
+// function moveToBacklog(taskId: number) {
+//     store.moveToBacklog(taskId);
+// }
 function toggleMenu(taskId: number, event: MouseEvent) {
     // Prevent the click event from propagating to the parent elements
     event.stopPropagation();
