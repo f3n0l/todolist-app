@@ -1,14 +1,13 @@
-import { defineStore, toRefs } from "pinia";
+import { defineStore } from "pinia";
+import { v4 as uuidv4 } from "uuid";
 
 export interface ToDoTask {
-    id: number;
+    id: string;
     name: string;
     description: string;
     completed: boolean;
 }
-// import { useBacklogStore } from "../store/useBacklogStore";
 
-// The useToDoListStore store is defined here
 export const useToDoListStore = defineStore("toDoList", {
     state: () => ({
         tasks: [] as ToDoTask[],
@@ -18,32 +17,22 @@ export const useToDoListStore = defineStore("toDoList", {
         addTask(task: Omit<ToDoTask, "id">): void {
             const newTask: ToDoTask = {
                 ...task,
-                id: ++this.lastId,
+                id: uuidv4(), // Generate unique ID using uuid
                 completed: false,
             };
             this.tasks.push(newTask);
         },
-        deleteTask(taskId: number): void {
+        deleteTask(taskId: string): void {
             this.tasks = this.tasks.filter((task) => task.id !== taskId);
         },
-        toggleTaskCompletion(taskId: number): void {
-            const taskIndex = this.tasks.findIndex(
-                (task) => task.id === taskId
-            );
-            if (taskIndex !== -1) {
-                this.tasks[taskIndex].completed =
-                    !this.tasks[taskIndex].completed;
-            }
+        toggleTaskCompletion(taskId: string): void {
+            this.tasks = this.tasks.map((task) => {
+                if (task.id === taskId) {
+                    // Toggle the completed status immutably
+                    return { ...task, completed: !task.completed };
+                }
+                return task;
+            });
         },
-        // moveToBacklog(taskId: number) {
-        //     const taskIndex = this.tasks.findIndex(
-        //         (task) => task.id === taskId
-        //     );
-        //     if (taskIndex !== -1) {
-        //         const taskToMove = this.tasks.splice(taskIndex, 1)[0];
-        //         // Call your backlog store's addTask action here
-        //         useBacklogStore.addTask(taskToMove);
-        //     }
-        // },
     },
 });
