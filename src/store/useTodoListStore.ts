@@ -6,7 +6,7 @@ export interface ToDoTask {
     description: string;
     completed: boolean;
 }
-
+// The useToDoListStore store is defined here
 export const useToDoListStore = defineStore("toDoList", {
     state: () => ({
         tasks: [] as ToDoTask[],
