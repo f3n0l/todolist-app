@@ -3,7 +3,7 @@
         <input
             v-model="taskName"
             type="text"
-            class="w-full py-2 px-4 border border-gray-300 rounded-l-md focus:outline-none focus:ring focus:border-blue-300"
+            class="w-full p-2 px-3 py-[15px] border border-gray-300 rounded-l-md focus:outline-none focus:ring focus:border-blue-300 font-roboto text-md"
             placeholder="Enter task name"
         />
         <button
@@ -27,7 +27,7 @@ function addTask() {
         return;
     }
     const newTask = {
-        id: taskName.value + Math.random(),
+        id: Date.now(), // Use a unique identifier, for example, current timestamp
         name: taskName.value,
         description: "Description for Task",
         completed: false,

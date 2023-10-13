@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
-import { v4 as uuidv4 } from "uuid";
 
 export interface ToDoTask {
-    id: string;
+    id: number;
     name: string;
     description: string;
     completed: boolean;
@@ -17,15 +16,15 @@ export const useToDoListStore = defineStore("toDoList", {
         addTask(task: Omit<ToDoTask, "id">): void {
             const newTask: ToDoTask = {
                 ...task,
-                id: uuidv4(), // Generate unique ID using uuid
+                id: this.lastId++, // Generate unique ID using uuid
                 completed: false,
             };
             this.tasks.push(newTask);
         },
-        deleteTask(taskId: string): void {
+        deleteTask(taskId: number): void {
             this.tasks = this.tasks.filter((task) => task.id !== taskId);
         },
-        toggleTaskCompletion(taskId: string): void {
+        toggleTaskCompletion(taskId: number): void {
             this.tasks = this.tasks.map((task) => {
                 if (task.id === taskId) {
                     // Toggle the completed status immutably

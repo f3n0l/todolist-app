@@ -9,6 +9,7 @@ export default {
       },
       fontSize: {
         '28': '28px',
+        'md': '15px',
       },
       lineHeight: {
         '32.81': '32.81px',

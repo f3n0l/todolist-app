@@ -82,7 +82,7 @@
                 class="entry-wrapper w-full mb-2 p-4 border rounded-lg flex items-center relative"
             >
                 <input
-                    @click="toggleActivation(task.id)"
+                    @click="toggleActivation(task.id), console.log(task.id)"
                     type="checkbox"
                     v-model="task.completed"
                     class="w-6 h-6 bg-red-100 rounded-full mr-4 cursor-pointer"
@@ -145,7 +145,6 @@ function toggleCompletedTasks() {
 }
 
 function toggleActivation(taskId: number) {
-    console.log(taskId);
     store.toggleTaskCompletion(taskId);
 }
 
@@ -167,6 +166,10 @@ function toggleMenu(taskId: number, event: MouseEvent) {
         // Otherwise, open the menu for this entry
         activeMenuId.value = taskId;
     }
+}
+
+function moveToBacklog(taskId: number): void {
+    store.moveToBacklog(taskId);
 }
 
 onMounted(() => {
