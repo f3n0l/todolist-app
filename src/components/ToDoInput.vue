@@ -1,6 +1,8 @@
 <template>
-    <div class="flex items-center justify-between w-full mb-4">
+    <div>
         <input
+            :disabled="isDisabled"
+            :class="{ 'cursor-not-allowed': isDisabled }"
             v-model="taskName"
             type="text"
             class="w-full text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] max-w-[85%] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
@@ -8,7 +10,12 @@
         />
         <button
             @click="addTask"
-            class="bg-primary max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded hover:bg-primaryHover border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+            :disabled="isDisabled"
+            :class="{
+                'cursor-not-allowed': isDisabled,
+                'hover:bg-primaryHover': !isDisabled,
+            }"
+            class="bg-primary max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
         >
             Add Task
         </button>
@@ -16,11 +23,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
+import { useRoute } from "vue-router";
 
 const taskName = ref("");
 const store = useToDoListStore();
+const route = useRoute();
+
+const isDisabled = computed(() => {
+    return route.path === "/backlog";
+});
 
 function addTask() {
     if (taskName.value.trim() === "") {
@@ -41,5 +54,18 @@ function addTask() {
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
 /* Add your custom styles here */
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+/* Gray out when the route is /backlog */
+:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+}
+button.cursor-not-allowed:hover {
+    color: #9ca3af; /* Change to your desired text color */
+}
 </style>
