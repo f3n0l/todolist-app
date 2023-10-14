@@ -1,14 +1,14 @@
 <template>
-    <div class="flex items-center w-full mb-4">
+    <div class="flex items-center justify-between w-full mb-4">
         <input
             v-model="taskName"
             type="text"
-            class="w-full p-2 px-3 py-[15px] border border-gray-300 rounded-l-md focus:outline-none focus:ring focus:border-blue-300 font-roboto text-md"
+            class="w-full text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] max-w-[85%] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
             placeholder="Enter task name"
         />
         <button
             @click="addTask"
-            class="bg-blue-500 text-white py-2 px-4 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            class="bg-primary max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded hover:bg-primaryHover border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
         >
             Add Task
         </button>

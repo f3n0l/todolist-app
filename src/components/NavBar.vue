@@ -3,16 +3,22 @@
         <nav class="font-roboto text-28 font-bold leading-32.81 mb-4 mt-[30px]">
             <router-link
                 to="/"
-                class="mr-8 relative secondaryText hover:primaryText transition duration-300"
-                :class="{ primaryText: route.path === '/' }"
+                class="mr-8 relative hover:text-primaryText transition duration-300"
+                :class="{
+                    'text-primaryText': route.path === '/',
+                    'text-secondaryText': route.path !== '/',
+                }"
             >
                 To Do List
                 <span v-if="route.path === '/'" class="active-indicator"></span>
             </router-link>
             <router-link
                 to="/backlog"
-                class="relative secondaryText hover:primaryText transition duration-300"
-                :class="{ primaryText: route.path === '/backlog' }"
+                class="relative hover:text-primaryText transition duration-300"
+                :class="{
+                    'text-primaryText': route.path === '/backlog',
+                    'text-secondaryText': route.path !== '/backlog',
+                }"
             >
                 Backlog
                 <span
@@ -44,18 +50,9 @@ onMounted(() => {
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s;
-}
-
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-
 .active-indicator {
     position: absolute;
+    top: 46px;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -68,6 +65,5 @@ onMounted(() => {
 
 .router-link-active .active-indicator {
     width: 100%;
-    left: 0;
 }
 </style>

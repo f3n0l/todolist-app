@@ -1,74 +1,47 @@
 <template>
-    <div class="max-w-screen-sm h-[60vw] mt-3 flex flex-col justify-start">
+    <div class="w-full h-[60vw] mt-3 flex flex-col justify-start">
         <!-- Completed Tasks Section -->
-        <div class="mb-3">
-            <div @click="toggleCompletedTasks" class="cursor-pointer mb-2">
+        <div class="">
+            <div class="">
                 <div
-                    :class="{ 'rotate-180': completedTasksOpen }"
-                    class="arrow-icon mr-2"
-                ></div>
-                <span class="text-lg font-bold"
-                    >{{ completedTasks.length }} Done</span
+                    @click="toggleCompletedTasks"
+                    class="cursor-pointer mb-2 flex items-center"
                 >
+                    <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="mr-3.5"
+                        :class="{ 'rotate-90': completedTasksOpen }"
+                    >
+                        <path
+                            d="M9.13883 6.46634L3.76097 11.8068C3.5016 12.0644 3.0811 12.0644 2.82176 11.8068L2.19452 11.1839C1.93559 10.9268 1.9351 10.5101 2.19341 10.2524L6.45546 5.99999L2.19341 1.74765C1.9351 1.48991 1.93559 1.07318 2.19452 0.816057L2.82176 0.193175C3.08113 -0.0643917 3.50163 -0.0643917 3.76097 0.193175L9.1388 5.53366C9.39817 5.7912 9.39817 6.20878 9.13883 6.46634Z"
+                            fill="#CCCCCC"
+                        />
+                    </svg>
+                    <span class="text-lg font-roboto text-md text-secondary"
+                        >{{ completedTasks.length }} Done</span
+                    >
+                </div>
             </div>
-            <div class="sections-wrapper">
-                <transition name="slide-down">
-                    <div v-if="completedTasksOpen">
+            <transition name="slide-down">
+                <div v-if="completedTasksOpen">
+                    <div class="mb-2">
                         <!-- Completed tasks content -->
-                        <div
+                        <TaskEntry
                             v-for="(task, index) in completedTasks"
                             :key="index"
-                            class="entry-wrapper w-full mb-2 p-4 border rounded-lg flex items-center relative"
-                        >
-                            <input
-                                @click="toggleActivation(task.id)"
-                                type="checkbox"
-                                v-model="task.completed"
-                                class="w-6 h-6 bg-red-100 rounded-full mr-4 cursor-pointer"
-                            />
-                            <div class="ml-4 flex flex-col flex-1">
-                                <div
-                                    class="text-lg font-semibold"
-                                    :class="{ 'line-through': task.completed }"
-                                >
-                                    {{ task.name }}
-                                </div>
-                                <div
-                                    class="text-sm"
-                                    :class="{ 'line-through': task.completed }"
-                                >
-                                    {{ task.description }}
-                                </div>
-                            </div>
-                            <div
-                                @click="toggleMenu(task.id, $event)"
-                                class="menu-dots"
-                            ></div>
-
-                            <transition name="fade">
-                                <div
-                                    v-if="activeMenuId === task.id"
-                                    class="menu-content"
-                                >
-                                    <!-- Menu Items -->
-                                    <div
-                                        @click="deleteTask(task.id)"
-                                        class="menu-item"
-                                    >
-                                        Delete
-                                    </div>
-                                    <div
-                                        @click="moveToBacklog(task.id)"
-                                        class="menu-item"
-                                    >
-                                        Move to Backlog
-                                    </div>
-                                </div>
-                            </transition>
-                        </div>
+                            :task="task"
+                            :taskId="task.id"
+                            :toggleActivation="toggleActivation"
+                            :toggleMenu="toggleMenu"
+                            :deleteTask="deleteTask"
+                        />
                     </div>
-                </transition>
-            </div>
+                </div>
+            </transition>
         </div>
 
         <div class="w-full h-px bg-gray-200 mb-3"></div>
@@ -76,57 +49,23 @@
         <!-- Open Tasks Section -->
         <div class="mb-6">
             <!-- Open tasks content -->
-            <div
-                v-for="(task, index) in openTasks"
-                :key="index"
-                class="entry-wrapper w-full mb-2 p-4 border rounded-lg flex items-center relative"
-            >
-                <input
-                    @click="toggleActivation(task.id), console.log(task.id)"
-                    type="checkbox"
-                    v-model="task.completed"
-                    class="w-6 h-6 bg-red-100 rounded-full mr-4 cursor-pointer"
-                />
-                <div class="ml-4 flex flex-col flex-1">
-                    <div
-                        class="text-lg font-semibold"
-                        :class="{ 'line-through': task.completed }"
-                    >
-                        {{ task.name }}
-                    </div>
-                    <div
-                        class="text-sm"
-                        :class="{ 'line-through': task.completed }"
-                    >
-                        {{ task.description }}
-                    </div>
-                </div>
-                <div
-                    @click="toggleMenu(task.id, $event)"
-                    class="menu-dots"
-                ></div>
-                <transition name="fade">
-                    <div v-if="activeMenuId === task.id" class="menu-content">
-                        <!-- Menu Items -->
-                        <div @click="deleteTask(task.id)" class="menu-item">
-                            Delete
-                        </div>
-                        <div @click="moveToBacklog(task.id)" class="menu-item">
-                            Move to Backlog
-                        </div>
-                    </div>
-                </transition>
-            </div>
+            <TaskEntry
+                v-for="(task, index2) in openTasks"
+                :key="index2"
+                :task="task"
+                :toggleActivation="toggleActivation"
+                :toggleMenu="toggleMenu"
+                :deleteTask="deleteTask"
+                :moveToBacklog="moveToBacklog"
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, Ref, reactive } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, reactive, Ref } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
-window.addEventListener("click", () => {
-    menuOpen.value = false;
-});
+import TaskEntry from "../components/EntryComponent.vue";
 
 const store = reactive(useToDoListStore());
 const activeMenuId: Ref<number | null> = ref(null);
@@ -168,9 +107,9 @@ function toggleMenu(taskId: number, event: MouseEvent) {
     }
 }
 
-function moveToBacklog(taskId: number): void {
-    store.moveToBacklog(taskId);
-}
+// function moveToBacklog(taskId: number): void {
+//     store.moveToBacklog(taskId);
+// }
 
 onMounted(() => {
     window.addEventListener("click", handleGlobalClick);
