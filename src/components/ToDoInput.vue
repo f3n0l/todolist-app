@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="h-auto w-full max-h-[42px] flex">
         <input
             :disabled="isDisabled"
             :class="{ 'cursor-not-allowed': isDisabled }"
             v-model="taskName"
             type="text"
-            class="w-full text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] max-w-[85%] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
+            class="w-full text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
             placeholder="Enter task name"
         />
         <button
@@ -15,7 +15,7 @@
                 'cursor-not-allowed': isDisabled,
                 'hover:bg-primaryHover': !isDisabled,
             }"
-            class="bg-primary max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+            class="bg-primary min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
         >
             Add Task
         </button>
@@ -40,10 +40,11 @@ function addTask() {
         return;
     }
     const newTask = {
-        id: Date.now(), // Use a unique identifier, for example, current timestamp lol
+        id: Date.now(),
         name: taskName.value,
         description: "Description for Task",
         completed: false,
+        creationDate: new Date(),
     };
     store.addTask(newTask);
     taskName.value = "";
@@ -55,7 +56,6 @@ function addTask() {
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Add your custom styles here */
 .cursor-not-allowed {
     cursor: not-allowed;
 }
@@ -66,6 +66,6 @@ function addTask() {
     color: #9ca3af;
 }
 button.cursor-not-allowed:hover {
-    color: #9ca3af; /* Change to your desired text color */
+    color: #9ca3af;
 }
 </style>

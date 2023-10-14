@@ -9,7 +9,8 @@ export default {
         primary: '#0080FF',
         primaryHover: '#41A0FF',
         secondary: '#CCC',
-
+        black: '#121212',
+        darkGray: "#AAAAAA",
       },
       fontFamily: {
         roboto: ['Roboto', 'sans'],
@@ -17,18 +18,21 @@ export default {
       fontSize: {
         '28': '28px',
         'md': '15px',
-        'sm': '10px'
+        'sm': '10px',
+        'menu': '13px'
       },
       lineHeight: {
         '32.81': '32.81px',
       },
       textColor: {
         primaryText: '#121212',
+        primaryTextHover: '#41A0FF',
         secondaryText: '#BBBBBB',
       },
       backgroundColor: {
         primaryButton: '#0080FF',
-        primaryButtonHover: '#41A0FF'
+        primaryButtonHover: '#41A0FF',
+        secondaryButton: '#EEE',
       }
     },
   },

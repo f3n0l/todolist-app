@@ -3,46 +3,29 @@
         <div class="flex items-center space-x-2">
             <div
                 :class="task.completed ? 'bg-blue-500' : 'bg-transparent'"
-                @click="toggleCompletion"
+                @click="toggleCompletion(task)"
                 class="w-6 h-6 border-2 border-gray-400 rounded-full cursor-pointer"
             ></div>
             <div :class="task.completed ? 'line-through text-gray-500' : ''">
                 <h4>{{ task.name }}</h4>
                 <p>{{ task.description }}</p>
             </div>
-        </div>
-        <div class="relative group">
-            <button class="p-2">⋮</button>
-            <div
-                class="absolute right-0 z-10 bg-white border shadow-md mt-2 w-32 group-hover:block hidden space-y-2 p-2"
-            >
-                <button @click="deleteThisTask">Delete</button>
-                <button @click="moveThisTaskToBacklog">Move to Backlog</button>
-            </div>
+            <slot name="actions"></slot>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { toRefs } from "vue";
-
+import { defineProps } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
 import { Task } from "../types/types";
 
-const { task } = toRefs(defineProps<{ task: Task }>()); // Now we use the Task type here
+const { task } = defineProps<{ task: Task }>();
 
 const store = useToDoListStore();
 
-const toggleCompletion = () => {
-    store.toggleTaskCompletion(task.value.id); // Accessing the id using .value
-};
-
-const deleteThisTask = () => {
-    store.deleteTask(task.value.id); // Accessing the id using .value
-};
-
-const moveThisTaskToBacklog = () => {
-    store.moveToBacklog(task.value.id); // Accessing the id using .value
+const toggleCompletion = (task: Task) => {
+    store.toggleTaskCompletion(task.id);
 };
 </script>
 
@@ -50,5 +33,4 @@ const moveThisTaskToBacklog = () => {
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-/* Add your custom styles here */
 </style>

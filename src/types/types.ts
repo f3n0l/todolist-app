@@ -4,6 +4,7 @@ export type Task = {
     description: string;
     completed: boolean;
     showMenu?: boolean;
+    creationDate: Date;
 };
 
 export type State = {

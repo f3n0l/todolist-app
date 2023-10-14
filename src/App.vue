@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center items-start min-h-screen">
-        <div class="max-w-[812px] p-4 w-screen">
+    <div class="flex justify-center items-start">
+        <div class="max-w-[812px] w-screen h-[100vh] max-h-screen">
             <NavBar />
             <router-view />
             <ToDoInput />

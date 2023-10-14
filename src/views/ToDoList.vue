@@ -1,44 +1,111 @@
 <template>
-    <div class="container mx-auto p-4">
+    <div
+        class="container w-full h-full max-h-[80vh] overflow-y-auto overflow-x-hidden pt-3 flex flex-col justify-start no-scrollbar"
+    >
         <!-- Completed Tasks Section -->
-        <button @click="toggleCompletedTasksSection">
-            {{ completedTasksSectionOpen ? "Hide" : "Show" }} Completed Tasks
-            ({{ completedTasks.length }})
-        </button>
-        <div v-if="completedTasksSectionOpen">
-            <h3>Done</h3>
-            <div v-for="task in completedTasks" :key="task.id">
-                <!-- Render completed tasks here -->
+
+        <div class="h-100">
+            <div
+                @click="toggleCompletedTasksSection"
+                class="cursor-pointer mb-2 flex items-center"
+            >
+                <img
+                    src="../assets/Arrow.svg"
+                    class="mr-3.5 transition-transform"
+                    :class="{
+                        'rotate-90 transition-transform':
+                            completedTasksSectionOpen,
+                    }"
+                />
+                <span class="text-lg font-roboto text-md text-secondary"
+                    >{{ completedTasks.length }} Done</span
+                >
+            </div>
+
+            <div
+                v-if="completedTasksSectionOpen"
+                v-for="task in completedTasks"
+                :key="task.id"
+            >
+                <!--  completed tasks -->
                 <div class="flex items-center justify-between w-full mb-4">
                     <div class="flex items-center space-x-2">
                         <div
                             :class="
                                 task.completed
-                                    ? 'bg-blue-500'
+                                    ? 'bg-primary border-none'
                                     : 'bg-transparent'
                             "
                             @click="toggleCompletion(task)"
-                            class="w-6 h-6 border-2 border-gray-400 rounded-full cursor-pointer"
-                        ></div>
+                            class="w-6 h-6 border border-secondary rounded-full cursor-pointer flex justify-center items-center"
+                        >
+                            <img
+                                class="h-3 w-3"
+                                :class="task.completed ? 'block' : 'hidden'"
+                                src="../assets/Vector.svg"
+                            />
+                        </div>
                         <div
                             :class="
                                 task.completed
-                                    ? 'line-through text-gray-500'
+                                    ? 'line-through text-secondary'
                                     : ''
                             "
                         >
-                            <h4>{{ task.name }}</h4>
-                            <p>{{ task.description }}</p>
+                            <h4
+                                class="text-md text-primaryText font-roboto leading-normal mt-[0.75rem]"
+                                :class="task.completed ? ' text-secondary' : ''"
+                            >
+                                {{ task.name }}
+                            </h4>
+                            <p
+                                class="text-sm text-secondary font-roboto leading-normal"
+                            >
+                                {{ task.description }}
+                            </p>
                         </div>
                     </div>
                     <div class="relative group">
-                        <button @click="toggleMenu(task)" class="p-2">⋮</button>
+                        <div
+                            @click="toggleMenu(task)"
+                            class="p-2 transition w-10 h-10 flex items-center justify-center rounded-full cursor-pointer hover:svg-black"
+                            :class="{
+                                'bg-black transition rounded-full bg-secondaryButton':
+                                    task.showMenu,
+                                'svg-black': task.showMenu,
+                            }"
+                        >
+                            <svg
+                                width="21"
+                                height="20"
+                                viewBox="0 0 21 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                            >
+                                <path
+                                    d="M12.9465 10.0558C12.9465 11.666 11.6437 12.9688 10.0335 12.9688C8.4233 12.9688 7.12056 11.666 7.12056 10.0558C7.12056 8.44559 8.4233 7.14285 10.0335 7.14285C11.6437 7.14285 12.9465 8.44559 12.9465 10.0558ZM17.1541 7.14285C15.5439 7.14285 14.2411 8.44559 14.2411 10.0558C14.2411 11.666 15.5439 12.9688 17.1541 12.9688C18.7643 12.9688 20.067 11.666 20.067 10.0558C20.067 8.44559 18.7643 7.14285 17.1541 7.14285ZM2.91296 7.14285C1.30274 7.14285 0 8.44559 0 10.0558C0 11.666 1.30274 12.9688 2.91296 12.9688C4.52317 12.9688 5.82591 11.666 5.82591 10.0558C5.82591 8.44559 4.52317 7.14285 2.91296 7.14285Z"
+                                    :fill="
+                                        task.showMenu ? '#121212' : 'darkGray'
+                                    "
+                                />
+                            </svg>
+                        </div>
                         <div
                             v-if="task.showMenu"
-                            class="absolute right-0 z-10 bg-white border shadow-md mt-2 w-32 space-y-2 p-2"
+                            class="absolute bg-white border border-light-gray z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
                         >
-                            <button @click="deleteTask(task)">Delete</button>
-                            <button @click="moveToBacklog(task)">
+                            <button
+                                class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
+                                @click="deleteTask(task)"
+                            >
+                                Delete
+                            </button>
+                            <div class="w-full h-px bg-gray-200"></div>
+                            <button
+                                class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
+                                @click="moveToBacklog(task)"
+                            >
                                 Move to Backlog
                             </button>
                         </div>
@@ -47,40 +114,88 @@
             </div>
         </div>
 
+        <div class="w-full h-px bg-gray-200 mb-3"></div>
         <!-- Open Tasks -->
-        <div>
-            <h3>Open Tasks</h3>
-            <div v-for="task in openTasks" :key="task.id">
+        <div class="h-100">
+            <div v-for="task in openTasks" :key="task.id" class="mb-6">
                 <div class="flex items-center justify-between w-full mb-4">
                     <div class="flex items-center space-x-2">
                         <div
                             :class="
                                 task.completed
-                                    ? 'bg-blue-500'
+                                    ? 'bg-primary border-none'
                                     : 'bg-transparent'
                             "
                             @click="toggleCompletion(task)"
-                            class="w-6 h-6 border-2 border-gray-400 rounded-full cursor-pointer"
-                        ></div>
+                            class="w-6 h-6 border border-secondary rounded-full cursor-pointer flex justify-center items-center"
+                        >
+                            <img
+                                class="h-3 w-3"
+                                :class="task.completed ? 'block' : 'hidden'"
+                                src="../assets/Vector.svg"
+                            />
+                        </div>
                         <div
                             :class="
                                 task.completed
-                                    ? 'line-through text-gray-500'
+                                    ? 'line-through text-secondary'
                                     : ''
                             "
                         >
-                            <h4>{{ task.name }}</h4>
-                            <p>{{ task.description }}</p>
+                            <h4
+                                class="text-md text-primaryText font-roboto leading-normal mt-[0.75rem]"
+                                :class="task.completed ? ' text-secondary' : ''"
+                            >
+                                {{ task.name }}
+                            </h4>
+                            <p
+                                class="text-sm text-secondary font-roboto leading-normal"
+                            >
+                                {{ task.description }}
+                            </p>
                         </div>
                     </div>
                     <div class="relative group">
-                        <button @click="toggleMenu(task)" class="p-2">⋮</button>
+                        <div
+                            @click="toggleMenu(task)"
+                            class="p-2 transition w-10 h-10 flex items-center justify-center rounded-full cursor-pointer hover:svg-black"
+                            :class="{
+                                'bg-black transition rounded-full bg-secondaryButton':
+                                    task.showMenu,
+                                'svg-black': task.showMenu,
+                            }"
+                        >
+                            <svg
+                                width="21"
+                                height="20"
+                                viewBox="0 0 21 20"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                            >
+                                <path
+                                    d="M12.9465 10.0558C12.9465 11.666 11.6437 12.9688 10.0335 12.9688C8.4233 12.9688 7.12056 11.666 7.12056 10.0558C7.12056 8.44559 8.4233 7.14285 10.0335 7.14285C11.6437 7.14285 12.9465 8.44559 12.9465 10.0558ZM17.1541 7.14285C15.5439 7.14285 14.2411 8.44559 14.2411 10.0558C14.2411 11.666 15.5439 12.9688 17.1541 12.9688C18.7643 12.9688 20.067 11.666 20.067 10.0558C20.067 8.44559 18.7643 7.14285 17.1541 7.14285ZM2.91296 7.14285C1.30274 7.14285 0 8.44559 0 10.0558C0 11.666 1.30274 12.9688 2.91296 12.9688C4.52317 12.9688 5.82591 11.666 5.82591 10.0558C5.82591 8.44559 4.52317 7.14285 2.91296 7.14285Z"
+                                    :fill="
+                                        task.showMenu ? '#121212' : 'darkGray'
+                                    "
+                                />
+                            </svg>
+                        </div>
                         <div
                             v-if="task.showMenu"
-                            class="absolute right-0 z-10 bg-white border shadow-md mt-2 w-32 space-y-2 p-2"
+                            class="absolute bg-white border border-light-gray z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
                         >
-                            <button @click="deleteTask(task)">Delete</button>
-                            <button @click="moveToBacklog(task)">
+                            <button
+                                class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
+                                @click="deleteTask(task)"
+                            >
+                                Delete
+                            </button>
+                            <div class="w-full h-px bg-gray-200"></div>
+                            <button
+                                class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
+                                @click="moveToBacklog(task)"
+                            >
                                 Move to Backlog
                             </button>
                         </div>
@@ -94,12 +209,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
-
 import { Task } from "../types/types";
 
 const store = useToDoListStore();
 
-const completedTasksSectionOpen = ref(true); // Set to true to open by default
+const completedTasksSectionOpen = ref(true); // Initially open
 
 const completedTasks = computed(() => store.tasks.filter((t) => t.completed));
 
@@ -133,5 +247,16 @@ const toggleCompletedTasksSection = () => {
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-/* Add your custom styles here */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.svg-black path {
+    fill: #121212;
+}
 </style>

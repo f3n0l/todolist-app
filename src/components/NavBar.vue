@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col items-start">
-        <nav class="font-roboto text-28 font-bold leading-32.81 mb-4 mt-[30px]">
+    <div class="flex flex-col items-start relative">
+        <nav class="font-roboto text-28 font-bold leading-32.81 mb-4 pt-[30px]">
             <router-link
                 to="/"
                 class="mr-8 relative hover:text-primaryText transition duration-300"

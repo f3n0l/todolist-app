@@ -61,8 +61,10 @@ const moveToToDoList = (task: Task) => {
 const sortBy = (type: "name" | "date") => {
     if (type === "name") {
         store.backlog.sort((a, b) => a.name.localeCompare(b.name));
-    } else {
-        store.backlog.sort((a, b) => a.id - b.id); // Assuming id is the timestamp
+    } else if (type === "date") {
+        store.backlog.sort(
+            (a, b) => a.creationDate.getTime() - b.creationDate.getTime()
+        );
     }
 };
 </script>
