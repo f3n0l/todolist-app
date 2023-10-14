@@ -1,15 +1,5 @@
 <template>
     <div class="container mx-auto p-4">
-        <ToDoInput :disabled="true" />
-        <input
-            v-model="searchTerm"
-            type="text"
-            placeholder="Search..."
-            class="mb-4"
-        />
-        <button @click="sortBy('name')">Sort by Name</button>
-        <button @click="sortBy('date')">Sort by Date</button>
-
         <!-- Completed Tasks Section -->
         <button @click="toggleCompletedTasksSection">
             {{ completedTasksSectionOpen ? "Hide" : "Show" }} Completed Tasks
@@ -104,11 +94,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
-import ToDoInput from "../components/ToDoInput.vue";
+
 import { Task } from "../types/types";
 
 const store = useToDoListStore();
-const searchTerm = ref("");
+
 const completedTasksSectionOpen = ref(true); // Set to true to open by default
 
 const completedTasks = computed(() => store.tasks.filter((t) => t.completed));
@@ -125,14 +115,6 @@ const deleteTask = (task: Task) => {
 
 const moveToBacklog = (task: Task) => {
     store.moveToBacklog(task.id);
-};
-
-const sortBy = (type: "name" | "date") => {
-    if (type === "name") {
-        store.tasks.sort((a, b) => a.name.localeCompare(b.name));
-    } else {
-        store.tasks.sort((a, b) => a.id - b.id); // Assuming id is the timestamp
-    }
 };
 
 const toggleMenu = (task: Task) => {

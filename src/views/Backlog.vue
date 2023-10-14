@@ -1,6 +1,5 @@
 <template>
     <div class="container mx-auto p-4">
-        <ToDoInput :disabled="true" />
         <input
             v-model="searchTerm"
             type="text"
@@ -39,7 +38,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
-import ToDoInput from "../components/ToDoInput.vue";
+
 import { Task } from "../types/types";
 
 const store = useToDoListStore();
