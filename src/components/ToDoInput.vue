@@ -27,7 +27,7 @@ function addTask() {
         return;
     }
     const newTask = {
-        id: Date.now(), // Use a unique identifier, for example, current timestamp
+        id: Date.now(), // Use a unique identifier, for example, current timestamp lol
         name: taskName.value,
         description: "Description for Task",
         completed: false,
