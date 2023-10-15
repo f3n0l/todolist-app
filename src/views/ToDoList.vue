@@ -222,7 +222,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useToDoListStore } from "../store/useTodoListStore";
 import { Task } from "../types/types";
 
@@ -246,15 +246,36 @@ const moveToBacklog = (task: Task) => {
     store.moveToBacklog(task.id);
 };
 
-const toggleMenu = (task: Task) => {
-    if (!task.hasOwnProperty("showMenu")) {
-        task.showMenu = false; // Initialize showMenu property if it doesn't exist
-    }
-    task.showMenu = !task.showMenu;
-};
+const toggleMenu = (clickedTask: Task) => {
+    // Close all menus first
+    store.tasks.forEach((task) => {
+        if (task.id !== clickedTask.id) {
+            task.showMenu = false;
+        }
+    });
 
+    clickedTask.showMenu = !clickedTask.showMenu;
+};
 const toggleCompletedTasksSection = () => {
     completedTasksSectionOpen.value = !completedTasksSectionOpen.value;
+};
+
+onMounted(() => {
+    document.addEventListener("click", closeMenusOnOutsideClick);
+});
+
+onUnmounted(() => {
+    document.removeEventListener("click", closeMenusOnOutsideClick);
+});
+
+const closeMenusOnOutsideClick = (event: Event) => {
+    const target = event.target as HTMLElement;
+    if (target.closest(".relative.group") === null) {
+        // If the clicked target is outside of the menu container, close all menus
+        store.tasks.forEach((task) => {
+            task.showMenu = false;
+        });
+    }
 };
 </script>
 
