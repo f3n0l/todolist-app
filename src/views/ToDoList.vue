@@ -4,10 +4,10 @@
     >
         <!-- Completed Tasks Section -->
 
-        <div class="h-100">
+        <div class="h-100 mb-2">
             <div
                 @click="toggleCompletedTasksSection"
-                class="cursor-pointer mb-2 flex items-center"
+                class="cursor-pointer flex items-center"
             >
                 <img
                     src="../assets/Arrow.svg"
@@ -122,7 +122,7 @@
             </transition-group>
         </div>
 
-        <div class="w-full h-px bg-chrome mb-3"></div>
+        <div class="w-full h-px bg-chrome mb-1"></div>
         <!-- Open Tasks -->
         <div class="h-100">
             <transition-group name="swipe-fade">
@@ -271,7 +271,6 @@ onUnmounted(() => {
 const closeMenusOnOutsideClick = (event: Event) => {
     const target = event.target as HTMLElement;
     if (target.closest(".relative.group") === null) {
-        // If the clicked target is outside of the menu container, close all menus
         store.tasks.forEach((task) => {
             task.showMenu = false;
         });

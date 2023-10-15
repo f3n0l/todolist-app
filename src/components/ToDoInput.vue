@@ -14,11 +14,10 @@
             @click="addTask"
             :disabled="isDisabled"
             :class="{
-                'cursor-not-allowed bg-secondary border border-gray ':
-                    isDisabled,
+                'cursor-not-allowed bg-secondary  border-gray ': isDisabled,
                 'hover:bg-primaryHover': !isDisabled,
             }"
-            class="bg-primary flex-none max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded border-1 border-darkBlue font-medium"
+            class="bg-primary flex-none max-h-[42px] text-md font-roboto text-white py-3 px-[15px] rounded border border-darkBlue font-medium"
         >
             Add Task
         </button>
@@ -62,6 +61,4 @@ function addTask() {
 .cursor-not-allowed {
     cursor: not-allowed;
 }
-
-/* Gray out when the route is /backlog */
 </style>

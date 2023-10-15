@@ -8,13 +8,13 @@
                 class="w-full flex-1 text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] border border-secondary rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
             />
             <button
-                class="bg-primary border-px border-darkBlue flex-none mr-4 min-w-[95px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
+                class="bg-primary border border-darkBlue flex-none mr-4 min-w-[95px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
                 @click="sortBy('name')"
             >
                 Sort by Name
             </button>
             <button
-                class="bg-primary border-px border-darkBlue flex-none min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
+                class="bg-primary border border-darkBlue flex-none min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
                 @click="sortBy('date')"
             >
                 Sort by Date
