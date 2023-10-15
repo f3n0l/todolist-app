@@ -1,47 +1,74 @@
 <template>
-    <div class="h-auto w-full flex">
-        <div class="h-auto w-full max-h-[42px] flex">
+    <div class="h-[80vh] w-full flex flex-col">
+        <div class="h-auto w-full flex pt-4">
             <input
                 v-model="searchTerm"
                 type="text"
                 placeholder="Search..."
-                class="w-full flex-1 text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
+                class="w-full flex-1 text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] border border-secondary rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
             />
             <button
-                class="bg-primary flex-none mr-4 min-w-[95px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+                class="bg-primary border-px border-darkBlue flex-none mr-4 min-w-[95px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
                 @click="sortBy('name')"
             >
                 Sort by Name
             </button>
             <button
-                class="bg-primary flex-none min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+                class="bg-primary border-px border-darkBlue flex-none min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue"
                 @click="sortBy('date')"
             >
                 Sort by Date
             </button>
         </div>
-        <div v-for="task in filteredBacklog" :key="task.id">
-            <div class="flex items-center justify-between w-full mb-4">
-                <div class="flex items-center space-x-2">
-                    <div
-                        :class="
-                            task.completed ? 'bg-blue-500' : 'bg-transparent'
-                        "
-                        @click="toggleCompletion(task)"
-                        class="w-6 h-6 border-2 border-gray-400 rounded-full cursor-pointer"
-                    ></div>
-                    <div
-                        :class="
-                            task.completed ? 'line-through text-gray-500' : ''
-                        "
-                    >
-                        <h4>{{ task.name }}</h4>
-                        <p>{{ task.description }}</p>
+        <div
+            class="flex flex-col pt-4 overflow-y-auto overflow-x-hidden no-scrollbar"
+        >
+            <div v-for="task in filteredBacklog" :key="task.id" class="mb-1">
+                <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center space-x-2">
+                        <div
+                            :class="
+                                task.completed
+                                    ? 'bg-primary border-none'
+                                    : 'bg-transparent'
+                            "
+                            @click="toggleCompletion(task)"
+                            class="w-6 h-6 border border-secondary rounded-full cursor-pointer flex justify-center items-center"
+                        >
+                            <img
+                                class="h-3 w-3"
+                                :class="task.completed ? 'block' : 'hidden'"
+                                src="../assets/Vector.svg"
+                            />
+                        </div>
+                        <div
+                            class="mt-3"
+                            :class="
+                                task.completed
+                                    ? 'line-through text-secondary'
+                                    : ''
+                            "
+                        >
+                            <h4
+                                class="text-md text-primaryText font-roboto leading-normal"
+                                :class="task.completed ? ' text-secondary' : ''"
+                            >
+                                {{ task.name }}
+                            </h4>
+                            <p
+                                class="text-sm text-secondary font-roboto leading-normal"
+                            >
+                                {{ task.description }}
+                            </p>
+                        </div>
                     </div>
+                    <button
+                        class="w-auto border rounded border-secondary flex font-roboto font-medium text-primary leading-normal text-menu items-center py-2 px-3 hover:border-darkGray hover:text-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+                        @click="moveToToDoList(task)"
+                    >
+                        Move to List
+                    </button>
                 </div>
-                <button @click="moveToToDoList(task)" class="p-2">
-                    Move to ToDoList
-                </button>
             </div>
         </div>
     </div>
@@ -86,5 +113,12 @@ const sortBy = (type: "name" | "date") => {
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Add your custom styles here */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 </style>

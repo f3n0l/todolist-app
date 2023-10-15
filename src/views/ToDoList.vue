@@ -1,6 +1,6 @@
 <template>
     <div
-        class="container w-full h-full max-h-[80vh] overflow-y-auto overflow-x-hidden pt-3 flex flex-col justify-start no-scrollbar"
+        class="w-full h-full max-h-[80vh] overflow-y-auto overflow-x-hidden pt-3 flex flex-col justify-start no-scrollbar"
     >
         <!-- Completed Tasks Section -->
 
@@ -26,9 +26,10 @@
                 v-if="completedTasksSectionOpen"
                 v-for="task in completedTasks"
                 :key="task.id"
+                class="mb-1"
             >
                 <!--  completed tasks -->
-                <div class="flex items-center justify-between w-full mb-4">
+                <div class="flex items-center justify-between w-full">
                     <div class="flex items-center space-x-2">
                         <div
                             :class="
@@ -46,6 +47,7 @@
                             />
                         </div>
                         <div
+                            class="mt-3"
                             :class="
                                 task.completed
                                     ? 'line-through text-secondary'
@@ -53,7 +55,7 @@
                             "
                         >
                             <h4
-                                class="text-md text-primaryText font-roboto leading-normal mt-[0.75rem]"
+                                class="text-md text-primaryText font-roboto leading-normal"
                                 :class="task.completed ? ' text-secondary' : ''"
                             >
                                 {{ task.name }}
@@ -93,7 +95,7 @@
                         </div>
                         <div
                             v-if="task.showMenu"
-                            class="absolute bg-white border border-light-gray z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
+                            class="absolute bg-white border border-secondary z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
                         >
                             <button
                                 class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
@@ -101,7 +103,7 @@
                             >
                                 Delete
                             </button>
-                            <div class="w-full h-px bg-gray-200"></div>
+                            <div class="w-full h-px bg-secondary"></div>
                             <button
                                 class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
                                 @click="moveToBacklog(task)"
@@ -114,11 +116,11 @@
             </div>
         </div>
 
-        <div class="w-full h-px bg-gray-200 mb-3"></div>
+        <div class="w-full h-px bg-chrome mb-3"></div>
         <!-- Open Tasks -->
         <div class="h-100">
-            <div v-for="task in openTasks" :key="task.id" class="mb-6">
-                <div class="flex items-center justify-between w-full mb-4">
+            <div v-for="task in openTasks" :key="task.id" class="mb-1">
+                <div class="flex items-center justify-between w-full">
                     <div class="flex items-center space-x-2">
                         <div
                             :class="
@@ -136,6 +138,7 @@
                             />
                         </div>
                         <div
+                            class="mt-3"
                             :class="
                                 task.completed
                                     ? 'line-through text-secondary'
@@ -143,7 +146,7 @@
                             "
                         >
                             <h4
-                                class="text-md text-primaryText font-roboto leading-normal mt-[0.75rem]"
+                                class="text-md text-primaryText font-roboto leading-normal"
                                 :class="task.completed ? ' text-secondary' : ''"
                             >
                                 {{ task.name }}
@@ -183,7 +186,7 @@
                         </div>
                         <div
                             v-if="task.showMenu"
-                            class="absolute bg-white border border-light-gray z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
+                            class="absolute bg-white border border-secondary z-10 w-[124px] h-[62px] rounded text-primary font-roboto text-menu -left-[128px] top-1.5"
                         >
                             <button
                                 class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
@@ -191,7 +194,7 @@
                             >
                                 Delete
                             </button>
-                            <div class="w-full h-px bg-gray-200"></div>
+                            <div class="w-full h-px bg-secondary"></div>
                             <button
                                 class="w-full h-[50%] flex items-center py-2 px-3 hover:text-primaryTextHover"
                                 @click="moveToBacklog(task)"
@@ -251,7 +254,6 @@ const toggleCompletedTasksSection = () => {
     display: none;
 }
 
-/* Hide scrollbar for IE, Edge, and Firefox */
 .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */

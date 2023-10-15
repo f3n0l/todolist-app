@@ -27,7 +27,7 @@
                 ></span>
             </router-link>
         </nav>
-        <div class="w-full h-px bg-gray-200"></div>
+        <div class="w-full h-px bg-chrome"></div>
     </div>
 </template>
 

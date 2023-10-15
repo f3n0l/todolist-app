@@ -11,6 +11,8 @@ export default {
         secondary: '#CCC',
         black: '#121212',
         darkGray: "#AAAAAA",
+        gray: "#BBBBBB",
+        chrome: "#EEEEEE"
       },
       fontFamily: {
         roboto: ['Roboto', 'sans'],
