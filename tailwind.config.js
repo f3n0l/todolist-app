@@ -35,9 +35,19 @@ export default {
         primaryButton: '#0080FF',
         primaryButtonHover: '#41A0FF',
         secondaryButton: '#EEE',
+      },
+      keyframes: {
+        swipeIn: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        }
+      },
+      animation: {
+        swipeIn: 'swipeIn 0.5s ease-out'
       }
     },
   },
   plugins: [],
 }
 
+//clean up unused classes, rename custom props to match tailwind/better semantics

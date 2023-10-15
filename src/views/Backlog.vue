@@ -23,53 +23,61 @@
         <div
             class="flex flex-col pt-4 overflow-y-auto overflow-x-hidden no-scrollbar"
         >
-            <div v-for="task in filteredBacklog" :key="task.id" class="mb-1">
-                <div class="flex items-center justify-between w-full">
-                    <div class="flex items-center space-x-2">
-                        <div
-                            :class="
-                                task.completed
-                                    ? 'bg-primary border-none'
-                                    : 'bg-transparent'
-                            "
-                            @click="toggleCompletion(task)"
-                            class="w-6 h-6 border border-secondary rounded-full cursor-pointer flex justify-center items-center"
-                        >
-                            <img
-                                class="h-3 w-3"
-                                :class="task.completed ? 'block' : 'hidden'"
-                                src="../assets/Vector.svg"
-                            />
-                        </div>
-                        <div
-                            class="mt-3"
-                            :class="
-                                task.completed
-                                    ? 'line-through text-secondary'
-                                    : ''
-                            "
-                        >
-                            <h4
-                                class="text-md text-primaryText font-roboto leading-normal"
-                                :class="task.completed ? ' text-secondary' : ''"
+            <transition-group name="swipe-fade">
+                <div
+                    v-for="task in filteredBacklog"
+                    :key="task.id"
+                    class="mb-1"
+                >
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center space-x-2">
+                            <div
+                                :class="
+                                    task.completed
+                                        ? 'bg-primary border-none'
+                                        : 'bg-transparent'
+                                "
+                                @click="toggleCompletion(task)"
+                                class="w-6 h-6 border border-secondary rounded-full cursor-pointer flex justify-center items-center"
                             >
-                                {{ task.name }}
-                            </h4>
-                            <p
-                                class="text-sm text-secondary font-roboto leading-normal"
+                                <img
+                                    class="h-3 w-3"
+                                    :class="task.completed ? 'block' : 'hidden'"
+                                    src="../assets/Vector.svg"
+                                />
+                            </div>
+                            <div
+                                class="mt-3"
+                                :class="
+                                    task.completed
+                                        ? 'line-through text-secondary'
+                                        : ''
+                                "
                             >
-                                {{ task.description }}
-                            </p>
+                                <h4
+                                    class="text-md text-primaryText font-roboto leading-normal"
+                                    :class="
+                                        task.completed ? ' text-secondary' : ''
+                                    "
+                                >
+                                    {{ task.name }}
+                                </h4>
+                                <p
+                                    class="text-sm text-secondary font-roboto leading-normal"
+                                >
+                                    {{ task.description }}
+                                </p>
+                            </div>
                         </div>
+                        <button
+                            class="w-auto border rounded border-secondary flex font-roboto font-medium text-primary leading-normal text-menu items-center py-2 px-3 hover:border-darkGray hover:text-darkBlue"
+                            @click="moveToToDoList(task)"
+                        >
+                            Move to List
+                        </button>
                     </div>
-                    <button
-                        class="w-auto border rounded border-secondary flex font-roboto font-medium text-primary leading-normal text-menu items-center py-2 px-3 hover:border-darkGray hover:text-darkBlue focus:outline-none focus:ring focus:border-blue-300"
-                        @click="moveToToDoList(task)"
-                    >
-                        Move to List
-                    </button>
                 </div>
-            </div>
+            </transition-group>
         </div>
     </div>
 </template>
@@ -120,5 +128,20 @@ const sortBy = (type: "name" | "date") => {
 .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+}
+
+.swipe-fade-enter-active,
+.swipe-fade-leave-active {
+    transition: transform 0.5s, opacity 0.7s;
+}
+.swipe-fade-enter-from,
+.swipe-fade-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+.swipe-fade-enter-to,
+.swipe-fade-leave-from {
+    transform: translateX(0);
+    opacity: 1;
 }
 </style>
