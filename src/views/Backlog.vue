@@ -1,13 +1,25 @@
 <template>
-    <div class="container mx-auto p-4">
-        <input
-            v-model="searchTerm"
-            type="text"
-            placeholder="Search..."
-            class="mb-4"
-        />
-        <button @click="sortBy('name')">Sort by Name</button>
-        <button @click="sortBy('date')">Sort by Date</button>
+    <div class="h-auto w-full flex">
+        <div class="h-auto w-full max-h-[42px] flex">
+            <input
+                v-model="searchTerm"
+                type="text"
+                placeholder="Search..."
+                class="w-full flex-1 text-primaryText mr-4 p-2 px-3 py-[15px] max-h-[42px] border border-gray-300 rounded placeholder:text-secondaryText focus:outline-none focus:border-primary font-roboto text-md"
+            />
+            <button
+                class="bg-primary flex-none mr-4 min-w-[95px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+                @click="sortBy('name')"
+            >
+                Sort by Name
+            </button>
+            <button
+                class="bg-primary flex-none min-w-[93px] max-h-[42px] text-md font-roboto text-white py-3 px-[15px] hover:bg-primaryHover rounded border-1 border-darkBlue focus:outline-none focus:ring focus:border-blue-300"
+                @click="sortBy('date')"
+            >
+                Sort by Date
+            </button>
+        </div>
         <div v-for="task in filteredBacklog" :key="task.id">
             <div class="flex items-center justify-between w-full mb-4">
                 <div class="flex items-center space-x-2">
