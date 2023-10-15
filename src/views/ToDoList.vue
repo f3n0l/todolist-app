@@ -4,7 +4,7 @@
     >
         <!-- Completed Tasks Section -->
 
-        <div class="h-100 mb-2">
+        <div class="h-auto mb-2">
             <div
                 @click="toggleCompletedTasksSection"
                 class="cursor-pointer flex items-center"
@@ -282,7 +282,14 @@ const closeMenusOnOutsideClick = (event: Event) => {
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
 
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 .swipe-fade-enter-active,
 .swipe-fade-leave-active {
     transition: transform 0.5s, opacity 0.7s;

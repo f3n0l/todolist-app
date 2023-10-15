@@ -1,5 +1,5 @@
 <template>
-    <div class="h-auto w-full max-h-[42px] flex">
+    <div class="h-auto w-full max-h-[42px] flex px-4 sm:px-0">
         <input
             :disabled="isDisabled"
             :class="{
